@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wichtige Tage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --dark-color: #2d3436;
+            --light-color: #f9f9f9;
+            --accent-color: #ffd166;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .countdown-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .countdown-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .birthday-babu {
+            background-color: var(--primary-color);
+        }
+        
+        .birthday-you {
+            background-color: var(--secondary-color);
+        }
+        
+        .anniversary {
+            background-color: #9b59b6;
+        }
+        
+        .holiday {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+        
+        .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .date {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .countdown-segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+        
+        .countdown-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+        
+        .section-title {
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        .heart {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .photo-memories {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .memory-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 0 auto;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .next-event {
+            background-color: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--primary-color);
+            transform: scale(1.02);
+        }
+        
+        .leap-year-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(78, 205, 196, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .countdown-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Wichtige Tage</h1>
+            <p class="subtitle">Countdown zu wichtigen Momenten für uns</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h2 class="section-title">Geburtstage</h2>
+        <div class="countdown-grid">
+            <div class="countdown-card">
+                <div class="card-header birthday-babu">Babus Geburtstag 2026</div>
+                <div class="card-body">
+                    <div class="date">11. April 2026</div>
+                    <div class="countdown" data-target="2026-04-11T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header birthday-babu">Babus Geburtstag 2027</div>
+                <div class="card-body">
+                    <div class="date">11. April 2027</div>
+                    <div class="countdown" data-target="2027-04-11T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header birthday-you">Jasper Geburtstag 2026</div>
+                <div class="card-body">
+                    <div class="date">29. Mai 2026</div>
+                    <div class="countdown" data-target="2026-05-29T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header birthday-you">Jasper Geburtstag 2027</div>
+                <div class="card-body">
+                    <div class="date">29. Mai 2027</div>
+                    <div class="countdown" data-target="2027-05-29T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">Unser Jahrestag</h2>
+        <div class="countdown-grid">
+            <div class="countdown-card">
+                <div class="card-header anniversary">Jahrestag 2026</div>
+                <div class="card-body">
+                    <div class="date">20. Januar 2026</div>
+                    <div class="countdown" data-target="2026-01-20T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header anniversary">Jahrestag 2027</div>
+                <div class="card-body">
+                    <div class="date">20. Januar 2027</div>
+                    <div class="countdown" data-target="2027-01-20T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">Feiertage</h2>
+        <div class="countdown-grid">
+            <div class="countdown-card">
+                <div class="card-header holiday">Valentinstag 2026</div>
+                <div class="card-body">
+                    <div class="date">14. Februar 2026</div>
+                    <div class="countdown" data-target="2026-02-14T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header holiday">Weihnachten 2025</div>
+                <div class="card-body">
+                    <div class="date">24. Dezember 2025</div>
+                    <div class="countdown" data-target="2025-12-24T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header holiday">Silvester 2025</div>
+                <div class="card-body">
+                    <div class="date">31. Dezember 2025</div>
+                    <div class="countdown" data-target="2025-12-31T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header holiday">Valentinstag 2027</div>
+                <div class="card-body">
+                    <div class="date">14. Februar 2027</div>
+                    <div class="countdown" data-target="2027-02-14T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="countdown-card">
+                <div class="card-header holiday">Weihnachten 2026</div>
+                <div class="card-body">
+                    <div class="date">24. Dezember 2026</div>
+                    <div class="countdown" data-target="2026-12-24T00:00:00">
+                        <div class="countdown-segment">
+                            <span class="countdown-value days">--</span>
+                            <span class="countdown-label">Tage</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value hours">--</span>
+                            <span class="countdown-label">Std</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value minutes">--</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-segment">
+                            <span class="countdown-value seconds">--</span>
+                            <span class="countdown-label">Sek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="leap-year-info">
+            <h3>Schaltjahr-Info</h3>
+            <p>2024 ist ein Schaltjahr. 2025, 2026 und 2027 sind keine Schaltjahre. Das nächste Schaltjahr ist 2028.</p>
+            <p>Alle Countdowns berücksichtigen Schaltjahre automatisch für präzise Berechnungen.</p>
+        </div>
+        
+    
+
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Mit <span class="heart">♥</span> erstellt</p>
+        </div>
+    </footer>
+
+    <script>
+        // Prüfen, ob ein Jahr ein Schaltjahr ist
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+        
+        // Countdown-Funktion mit Schaltjahr-Berücksichtigung
+        function updateCountdowns() {
+            const countdownElements = document.querySelectorAll('.countdown');
+            const now = new Date();
+            
+            // Entferne alle "next-event" Klassen
+            document.querySelectorAll('.countdown-card').forEach(card => {
+                card.classList.remove('next-event');
+            });
+            
+            // Finde das nächste Ereignis
+            let nextEventDate = null;
+            let nextEventCard = null;
+            let smallestDiff = Infinity;
+            
+            countdownElements.forEach(countdown => {
+                const targetDate = new Date(countdown.dataset.target);
+                
+                // Zeitdifferenz in Millisekunden
+                const diff = targetDate - now;
+                
+                // Wenn das Datum bereits vorbei ist
+                if (diff <= 0) {
+                    countdown.innerHTML = '<p>Dieser Tag ist bereits vorbei!</p>';
+                    return;
+                }
+                
+                // Berechnung der Tage, Stunden, Minuten und Sekunden
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // Aktualisierung der Anzeige
+                countdown.querySelector('.days').textContent = days;
+                countdown.querySelector('.hours').textContent = hours < 10 ? '0' + hours : hours;
+                countdown.querySelector('.minutes').textContent = minutes < 10 ? '0' + minutes : minutes;
+                countdown.querySelector('.seconds').textContent = seconds < 10 ? '0' + seconds : seconds;
+                
+                // Prüfe, ob dies das nächste Ereignis ist
+                if (diff < smallestDiff) {
+                    smallestDiff = diff;
+                    nextEventDate = targetDate;
+                    nextEventCard = countdown.closest('.countdown-card');
+                }
+            });
+            
+            // Markiere das nächste Ereignis
+            if (nextEventCard) {
+                nextEventCard.classList.add('next-event');
+            }
+        }
+        
+        // Initialer Aufruf
+        updateCountdowns();
+        
+        // Aktualisierung jede Sekunde
+        setInterval(updateCountdowns, 1000);
+        
+        // Sortiere die Countdown-Karten nach Datum
+        function sortCountdowns() {
+            const grids = document.querySelectorAll('.countdown-grid');
+            
+            grids.forEach(grid => {
+                const cards = Array.from(grid.querySelectorAll('.countdown-card'));
+                
+                cards.sort((a, b) => {
+                    const dateA = new Date(a.querySelector('.countdown').dataset.target);
+                    const dateB = new Date(b.querySelector('.countdown').dataset.target);
+                    return dateA - dateB;
+                });
+                
+                // Entferne alle Karten
+                cards.forEach(card => card.remove());
+                
+                // Füge sie in sortierter Reihenfolge wieder hinzu
+                cards.forEach(card => grid.appendChild(card));
+            });
+        }
+        
+        // Überprüfe die Schaltjahre für die angezeigten Jahre
+        function checkLeapYears() {
+            const years = [2024, 2025, 2026, 2027, 2028];
+            const leapYears = years.filter(year => isLeapYear(year));
+            
+            console.log("Schaltjahre in der Zeitspanne:", leapYears);
+            
+            // Zeige Schaltjahr-Info in der Konsole
+            years.forEach(year => {
+                console.log(`${year}: ${isLeapYear(year) ? 'Schaltjahr' : 'Kein Schaltjahr'}`);
+            });
+        }
+        
+        // Führe Funktionen beim Laden der Seite aus
+        window.addEventListener('load', () => {
+            sortCountdowns();
+            checkLeapYears();
+            
+            // Zeige Informationen über die Datumsberechnung in der Konsole
+            console.log("JavaScript Date-Objekte berücksichtigen Schaltjahre automatisch.");
+            console.log("Beispiel: 29. Februar 2024 ist ein gültiges Datum (Schaltjahr)");
+            console.log("Beispiel: 29. Februar 2026 wird automatisch als 1. März 2026 interpretiert (kein Schaltjahr)");
+        });
+    </script>
+</body>
+</html>
